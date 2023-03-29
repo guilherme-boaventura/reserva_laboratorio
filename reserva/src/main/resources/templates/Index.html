@@ -9,7 +9,7 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../static/Style.css" />
+    <link rel="stylesheet" href="Style.css" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -31,14 +31,38 @@
         </svg>
       </a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav navbar">
           <li class="nav-item">
             <a class="nav-link" href="reserva">Reservar</a>
+          </li>
+          <li class="nav-item username">
+            <h5 th:if="${user} != null" th:text="${user.nome} ?: ''"></h5>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" th:if="${user} != null" href="logout">sair</a>
           </li>
         </ul>
       </div>
     </nav>
+    
+    <div th:if="${user} == null" class="container form-container">
+    <form method="POST" action="/login">
+      <div class="form-group">
+        <label>Login</label>
+        <input type="text" class="form-control" name="login" placeholder="Login">
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" class="form-control" name="senha" placeholder="Senha">
+      </div>
+      <small style="color:red" th:text="${authError} != null ? ${authError} : ''"></small>
+      <div class="button-container">
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </div>
+    </form>
+    </div>
 
+	<div class="tabela">
     <table class="table">
       <thead>
         <tr>
@@ -59,5 +83,6 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </body>
 </html>
