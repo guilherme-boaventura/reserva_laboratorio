@@ -66,7 +66,6 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Disciplina</th>
           <th scope="col">Professor</th>
           <th scope="col">Laboratorio</th>
@@ -75,11 +74,10 @@
       </thead>
       <tbody>
         <tr th:each="reserva : ${reservas}">
-          <th th:text="${reserva.id}" scope="row"></th>
           <td th:text="${reserva.disciplina}"></td>
           <td th:text="${reserva.professor.nome}"></td>
           <td th:text="${reserva.laboratorio.descricao}"></td>
-          <td th:text="${reserva.data}"></td>
+          <td th:text="${reserva.getDataFormatada()}"></td>
         </tr>
       </tbody>
     </table>

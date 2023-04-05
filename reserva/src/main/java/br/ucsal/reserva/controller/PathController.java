@@ -1,5 +1,6 @@
 package br.ucsal.reserva.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.ucsal.reserva.model.Disciplina;
+import br.ucsal.reserva.service.LaboratorioService;
 import br.ucsal.reserva.service.ReservaService;
 import jakarta.servlet.http.HttpSession;
 
@@ -15,6 +18,9 @@ public class PathController {
 
 	@Autowired
 	private ReservaService reservaService;
+	
+	@Autowired
+	private LaboratorioService laboratorioService;
 	
 	@GetMapping("/")
 	public String home() {
@@ -31,12 +37,16 @@ public class PathController {
 	}
 
 	@GetMapping("/reserva")
-	public String reserva(HttpSession session) {
+	public Object reserva(HttpSession session) {
 		if(Objects.isNull(session.getAttribute("user"))) {
+			ModelAndView mv = new ModelAndView("Index");
 			session.setAttribute("authError", "Entre para reservar um laboratório");
 			return "redirect:/home";
 		}else {
-			return "Reserva";
+			ModelAndView mv = new ModelAndView("Reserva");
+			mv.addObject("disciplinas", Disciplina.getAll());
+			mv.addObject("laboratorios", laboratorioService.getAll());
+			return mv;
 		}
 	}
 	

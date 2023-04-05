@@ -14,7 +14,7 @@ public class ReservaService {
 	@Autowired
 	private ReservaRepository reservaRepository;
 	
-	public Reserva salvar(Reserva reserva) {
+	public Reserva criarReserva(Reserva reserva) {
 		return reservaRepository.save(reserva);
 	}
 	

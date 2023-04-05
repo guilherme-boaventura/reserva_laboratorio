@@ -10,6 +10,8 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="ReservaStyle.css" />
+    <script src="ReservaScript.js"></script>
     <title>Reservar</title>
   </head>
   <body>
@@ -39,5 +41,42 @@
         </ul>
       </div>
     </nav>
+
+    <div class="form-container">
+      <form action="/reservaController/criar-reserva" method="POST">
+      
+  <div class="form-row">
+  <div class="form-group col-md-6">
+      <label for="disciplina">Disciplina</label>
+      <select name="disciplina" id="inputState" class="form-control">
+        <option selected value=""></option>
+        <div th:each="disciplina : ${disciplinas}">
+        <option th:value="${disciplina.nome}"  th:text="${disciplina.nome}"></option>
+      </select>
+    </div>
+    
+    <div class="form-group col-md-6">
+      <label>Laboratório</label>
+      <select name="laboratorio" class="form-control">
+        <option selected value=""></option>
+        <div th:each="laboratorio : ${laboratorios}">
+        <option th:text="${laboratorio.descricao}"></option>
+        </div>
+      </select>
+    </div>
+    
+    <div class="form-group col-md-6">
+      <label for="data">Data</label>
+      <input type="date" name="data" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Hora</label>
+      <input type="time" name="horario" class="form-control">
+    </div>
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Reservar</button>
+</form>
+    </div>
   </body>
 </html>

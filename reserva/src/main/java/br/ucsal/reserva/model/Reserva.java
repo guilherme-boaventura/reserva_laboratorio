@@ -1,5 +1,6 @@
 package br.ucsal.reserva.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,13 +33,23 @@ public class Reserva {
 	@JoinColumn(nullable=false)
 	Laboratorio laboratorio;
 
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(nullable=false)
 	Date data;
 	
 	Boolean aprovada;
 	
+	public Reserva() {
+	}
 	
+	public Reserva(Professor professor, String disciplina, Laboratorio laboratorio, Date data) {
+		this();
+		this.professor = professor;
+		this.disciplina = disciplina;
+		this.laboratorio = laboratorio;
+		this.data = data;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -69,6 +80,10 @@ public class Reserva {
 
 	public Date getData() {
 		return data;
+	}
+	
+	public String getDataFormatada() {
+		return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(data);
 	}
 
 	public void setData(Date data) {

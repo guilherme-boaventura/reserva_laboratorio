@@ -1,8 +1,5 @@
 package br.ucsal.reserva.model;
 
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,22 +13,22 @@ public class Professor {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	Long id;
+	private Long id;
 	
 	@Column(nullable=false)
-	String nome;
+	private String nome;
 	
 	@Column(nullable=false)
-	String disciplina;
+	private String disciplina;
 	
 	@Column(nullable=false)
-	String login;
+	private String login;
 	
 	@Column(nullable=false)
-	String senha;
+	private String senha;
 	
 	@Column(nullable=false)
-	String email;
+	private String email;
 
 	public Long getId() {
 		return id;
