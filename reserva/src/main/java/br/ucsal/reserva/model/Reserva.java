@@ -35,19 +35,28 @@ public class Reserva {
 
 	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	@Column(nullable=false)
-	Date data;
+	Date dataInicio;
+
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
+	@Column(nullable=false)
+	Date dataFim;
+	
+	@Column(nullable=false)
+	Short aulas;
 	
 	Boolean aprovada;
 	
 	public Reserva() {
 	}
 	
-	public Reserva(Professor professor, String disciplina, Laboratorio laboratorio, Date data) {
+	public Reserva(Professor professor, String disciplina, Laboratorio laboratorio, Date dataInicio, Date dataFim, Short aulas) {
 		this();
 		this.professor = professor;
 		this.disciplina = disciplina;
 		this.laboratorio = laboratorio;
-		this.data = data;
+		this.dataInicio = dataInicio;
+		this.dataFim = dataFim;
+		this.aulas = aulas;
 	}
 
 	public Long getId() {
@@ -77,17 +86,33 @@ public class Reserva {
 	public void setLaboratorio(Laboratorio laboratorio) {
 		this.laboratorio = laboratorio;
 	}
-
-	public Date getData() {
-		return data;
+	
+	public String getDia() {
+		return new SimpleDateFormat("dd/MM/yyyy").format(dataFim);
 	}
 	
-	public String getDataFormatada() {
-		return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(data);
+	public Date getDataFim() {
+		return dataFim;
+	}
+	
+	public void setDataFim(Date data) {
+		this.dataFim = data;
+	}
+	
+	public String getDataFimFormatada() {
+		return new SimpleDateFormat("HH:mm").format(dataFim);
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+	
+	public void setDataInicio(Date data) {
+		this.dataInicio = data;
+	}
+	
+	public String getDataInicioFormatada() {
+		return new SimpleDateFormat("HH:mm").format(dataInicio);
 	}
 
 	public Boolean getAprovada() {
@@ -96,5 +121,13 @@ public class Reserva {
 
 	public void setAprovada(Boolean aprovada) {
 		this.aprovada = aprovada;
+	}
+	
+	public Short getAulas() {
+		return aulas;
+	}
+
+	public void setAulas(Short aulas) {
+		this.aulas = aulas;
 	}
 }

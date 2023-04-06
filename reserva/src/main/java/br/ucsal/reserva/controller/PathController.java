@@ -30,7 +30,7 @@ public class PathController {
 	@GetMapping("/home")
 	public ModelAndView inicio(HttpSession session) {
 		ModelAndView mv = new ModelAndView("Index");
-		mv.addObject("reservas", reservaService.getAll());
+		mv.addObject("reservas", reservaService.getAprovadas());
 		mv.addObject("user", session.getAttribute("user"));
 		mv.addObject("authError", session.getAttribute("authError"));
 		return mv;

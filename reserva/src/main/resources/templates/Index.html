@@ -70,6 +70,8 @@
           <th scope="col">Professor</th>
           <th scope="col">Laboratorio</th>
           <th scope="col">Data</th>
+          <th scope="col">Início</th>
+          <th scope="col">Fim</th>
         </tr>
       </thead>
       <tbody>
@@ -77,7 +79,9 @@
           <td th:text="${reserva.disciplina}"></td>
           <td th:text="${reserva.professor.nome}"></td>
           <td th:text="${reserva.laboratorio.descricao}"></td>
-          <td th:text="${reserva.getDataFormatada()}"></td>
+          <td th:text="${reserva.getDia()}"></td>
+          <td th:text="${reserva.getDataInicioFormatada()}"></td>
+          <td th:text="${reserva.getDataFimFormatada()}"></td>
         </tr>
       </tbody>
     </table>
