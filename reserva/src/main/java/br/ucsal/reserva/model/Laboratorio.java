@@ -26,6 +26,8 @@ public class Laboratorio {
 	@Column(nullable=false)
 	String localizacao;
 	
+	 public Laboratorio() {}
+	
 	public Long getId() {
 		return id;
 	}
@@ -61,4 +63,9 @@ public class Laboratorio {
 	public void setLocalizacao(String localizacao) {
 		this.localizacao = localizacao;
 	}
+	  public Laboratorio(String descricao, int numMaquinas, String localizacao) {
+	        this.descricao = descricao;
+	        this.numMaquinas = numMaquinas;
+	        this.localizacao = localizacao;
+	    }
 }
