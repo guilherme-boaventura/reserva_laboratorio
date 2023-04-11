@@ -29,6 +29,26 @@ public class Professor {
 	
 	@Column(nullable=false)
 	private String email;
+	
+	
+	
+	
+	@Column(nullable=false)
+	private boolean admin;
+	
+	
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+	
+	
+	
+	
+	
 
 	public Long getId() {
 		return id;
@@ -73,4 +93,5 @@ public class Professor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 }

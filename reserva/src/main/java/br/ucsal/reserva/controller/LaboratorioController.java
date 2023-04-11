@@ -29,13 +29,6 @@ public class LaboratorioController {
 		this.laboratorioService = laboratorioService;
 	}
 
-	@GetMapping
-	public String listarLaboratorios(Model model) {
-		List<Laboratorio> laboratorios = laboratorioService.listarTodos();
-		model.addAttribute("laboratorios", laboratorios);
-		return "laboratorios";
-	}
-
 	@PostMapping()
 	public String createLab(@RequestParam("descricao") String descricao, @RequestParam("numMaquinas") int numMaquinas,
 			@RequestParam("localizacao") String localizacao) {
