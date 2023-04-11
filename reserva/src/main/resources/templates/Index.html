@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="Style.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed">
       <a class="navbar-brand" href="home">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,11 +32,17 @@
       </a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav navbar">
-          <li class="nav-item">
+          <li class="nav-item mr-4">
             <a class="nav-link" href="reserva">Reservar</a>
           </li>
+          <li class="nav-item mr-4">
+            <a class="nav-link" href="laboratorios" th:if="${user} != null" th:text="${user.admin} ? 'Cadastrar laboratório' : ''"></a>
+          </li>
+          <li class="nav-item mr-4">
+            <a class="nav-link" href="cadastroProfessor" th:if="${user} != null" th:text="${user.admin} ? 'Cadastrar professor' : ''"></a>
+          </li>
           <li class="nav-item username">
-            <h5 th:if="${user} != null" th:text="${user.nome} ?: ''"></h5>
+            <h5 th:if="${user} != null" th:text="${user.getPrimeiroNome()} ?: ''"></h5>
           </li>
           <li class="nav-item ">
             <a class="nav-link" th:if="${user} != null" href="logout">sair</a>
@@ -49,11 +55,11 @@
     <form method="POST" action="/login">
       <div class="form-group">
         <label>Login</label>
-        <input type="text" class="form-control" name="login" placeholder="Login">
+        <input required type="text" class="form-control" name="login" placeholder="Login">
       </div>
       <div class="form-group">
         <label>Senha</label>
-        <input type="password" class="form-control" name="senha" placeholder="Senha">
+        <input required type="password" class="form-control" name="senha" placeholder="Senha">
       </div>
       <small style="color:red" th:text="${authError} != null ? ${authError} : ''"></small>
       <div class="button-container">

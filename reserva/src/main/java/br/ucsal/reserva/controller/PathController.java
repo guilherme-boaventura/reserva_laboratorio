@@ -1,6 +1,5 @@
-package br.ucsal.reserva.controller;
+		package br.ucsal.reserva.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ucsal.reserva.model.Disciplina;
-import br.ucsal.reserva.model.Laboratorio;
-import br.ucsal.reserva.model.Professor;
 import br.ucsal.reserva.service.LaboratorioService;
 import br.ucsal.reserva.service.ReservaService;
 import jakarta.servlet.http.HttpSession;
@@ -46,6 +43,7 @@ public class PathController {
 			return "redirect:/home";
 		} else {
 			ModelAndView mv = new ModelAndView("Reserva");
+			mv.addObject("user", session.getAttribute("user"));
 			mv.addObject("disciplinas", Disciplina.getAll());
 			mv.addObject("laboratorios", laboratorioService.getAll());
 			return mv;
@@ -53,15 +51,17 @@ public class PathController {
 	}
 
 	@GetMapping("/laboratorios")
-	public ModelAndView cadastrarLaboratorio(HttpSession session) {
-		Professor professor = (Professor) session.getAttribute("user");
-		if (professor == null || !professor.isAdmin()) {
-			ModelAndView mav = new ModelAndView("redirect:/reserva");
-			mav.addObject("authError", "Você precisa ser um administrador para cadastrar um laboratório.");
-			return mav;
-		}
-		  ModelAndView mv = new ModelAndView("Laboratorios");
-		    mv.addObject("laboratorio", new Laboratorio());
-		    return mv;
+	public Object cadastrarLaboratorio(HttpSession session) {
+		ModelAndView mv = new ModelAndView("Laboratorios");
+		mv.addObject("user", session.getAttribute("user"));
+		return mv;
+	}
+
+	@GetMapping("/cadastroProfessor")
+	public ModelAndView cadastrarProfessor(HttpSession session) {
+		ModelAndView mv = new ModelAndView("CadastroProfessor");
+		mv.addObject("user", session.getAttribute("user"));
+		mv.addObject("disciplinas", Disciplina.getAll());
+		return mv;
 	}
 }

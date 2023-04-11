@@ -8,36 +8,58 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous" />
-<link rel="stylesheet" href="ReservaStyle.css" />
+<link rel="stylesheet" href="ReservaStyle.css"/>
 <script src="ReservaScript.js"></script>
 <title>Reservar</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="home"> <svg
-				xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-				fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+      <a class="navbar-brand" href="home">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-house-fill"
+          viewBox="0 0 16 16"
+        >
           <path
-					d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
+            d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"
+          />
           <path
-					d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
+            d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"
+          />
         </svg>
-		</a>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="./reserva">Reservar</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav navbar">
+          <li class="nav-item mr-4">
+            <a class="nav-link" href="reserva"><b>Reservar</b></a>
+          </li>
+          <li class="nav-item mr-4">
+            <a class="nav-link" href="laboratorios" th:if="${user} != null" th:text="${user.admin} ? 'Cadastrar laboratório' : ''"></a>
+          </li>
+          <li class="nav-item mr-4">
+            <a class="nav-link" href="cadastroProfessor" th:if="${user} != null" th:text="${user.admin} ? 'Cadastrar professor' : ''"></a>
+          </li>
+          <li class="nav-item username">
+            <h5 th:if="${user} != null" th:text="${user.getPrimeiroNome()} ?: ''"></h5>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" th:if="${user} != null" href="logout">sair</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
 	<div class="form-container">
 		<form action="/reservaController/criar-reserva" method="POST">
 
 			<div class="form-row">
 				<div class="form-group col-md-6">
-					<label for="disciplina">Disciplina</label> <select
-						name="disciplina" id="inputState" class="form-control">
+					<label for="disciplina">Disciplina</label> 
+					<select
+						name="disciplina" id="inputState" class="form-control" required>
 						<option selected value=""></option>
 						<div th:each="disciplina : ${disciplinas}">
 							<option th:value="${disciplina.nome}"
@@ -46,7 +68,7 @@
 				</div>
 
 				<div class="form-group col-md-6">
-					<label>Laboratório</label> <select name="laboratorio"
+					<label>Laboratório</label> <select required name="laboratorio"
 						class="form-control">
 						<option selected value=""></option>
 						<div th:each="laboratorio : ${laboratorios}">
@@ -56,12 +78,12 @@
 				</div>
 
 				<div class="form-group col-md-5">
-					<label for="data">Data</label> <input type="date" name="dataInicio"
+					<label for="data">Data</label> <input required type="date" name="dataInicio"
 						class="form-control">
 				</div>
 
 				<div class="form-group col-md-5">
-					<label>Horário</label> <select name="horario" class="form-control">
+					<label>Horário</label> <select required name="horario" class="form-control">
 						<option selected value=""></option>
 						<option value="07:00">07:00</option>
 						<option value="08:25">08:25</option>
@@ -71,7 +93,7 @@
 				</div>
 
 				<div class="form-group col-md-2">
-					<label>Nº aulas</label> <select name="aulas" class="form-control">
+					<label>Nº aulas</label> <select required name="aulas" class="form-control">
 						<option selected value="1">1</option>
 						<option value="2">2</option>
 					</select>
@@ -79,9 +101,10 @@
 				<small style="color: red" th:text="${error} != null ? ${error} : ''"></small>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Reservar</button>
-			<a class="btn btn-primary" href="/laboratorios">Novo laboratório</a>
-	</div>
+			<div class="form-row button-container"> 
+				<button type="submit" class="btn btn-primary col-2 button-container">Reservar</button>
+			</div>
+		</div>
 	</form>
 	</div>
 

@@ -30,13 +30,23 @@ public class Professor {
 	@Column(nullable=false)
 	private String email;
 	
-	
-	
-	
 	@Column(nullable=false)
-	private boolean admin;
+	private Boolean admin;
 	
+	public Professor() {
+		
+	}
 	
+	public Professor(String nome, String disciplina, String login, String senha, String email, Boolean admin) {
+		super();
+		this.nome = nome;
+		this.disciplina = disciplina;
+		this.login = login;
+		this.senha = senha;
+		this.email = email;
+		this.admin = admin;
+	}
+
 	public boolean isAdmin() {
 		return admin;
 	}
@@ -45,17 +55,17 @@ public class Professor {
 		this.admin = admin;
 	}
 	
-	
-	
-	
-	
-
 	public Long getId() {
 		return id;
 	}
 	
 	public String getNome() {
 		return nome;
+	}
+	
+	public String getPrimeiroNome() {
+		String[] nomeDividido = nome.split(" ");
+		return nomeDividido[0];
 	}
 
 	public void setNome(String nome) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,7 +9,7 @@
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 		crossorigin="anonymous" />
 	<link rel="stylesheet" href="ReservaStyle.css"/>
-	<title>Cadastro de Laboratório</title>
+	<title>Cadastro de Professor</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -36,10 +36,10 @@
             <a class="nav-link" href="reserva">Reservar</a>
           </li>
           <li class="nav-item mr-4">
-            <a class="nav-link" href="laboratorios"><b>Cadastrar laboratório</b></a>
+            <a class="nav-link" href="laboratorios">Cadastrar laboratório</a>
           </li>
           <li class="nav-item mr-4">
-            <a class="nav-link" href="cadastroProfessor">Cadastrar professor</a>
+            <a class="nav-link" href="cadastroProfessor"><b>Cadastrar professor</b></a>
           </li>
           <li class="nav-item username">
             <h5 th:if="${user} != null" th:text="${user.getPrimeiroNome()} ?: ''"></h5>
@@ -51,35 +51,54 @@
       </div>
     </nav>
     
-
-    
     <div class="form-container">
-		<form th:action="@{/laboratorios}" method="post">
+		<form th:action="@{/cadastrarProfessor}" method="post">
 
         <div class="form-row">
 			<div class="form-group col-6">
-				<label for="descricao">Descrição</label> 
+				<label for="nome">Nome Completo</label> 
 				<input type="text"
-					   class="form-control" id="descricao" name="descricao" required
+					   class="form-control" id="nome" name="nome" required
 					   title="Este campo é obrigatório">
 			</div>
-			<div class="form-group col-2-md-4">
-				<label for="numMaquinas">Número de Máquinas</label> 
-				<input type="number" class="form-control" id="numMaquinas" name="numMaquinas" required
+			<div class="form-group col-6">
+				<label for="numMaquinas">Email</label> 
+				<input type="email" class="form-control" id="email" name="email" required
 					   title="Este campo é obrigatório">
     		</div>
 		</div>
+		
+		<div class="form-row"> 
+			<div class="form-group col-6">
+				<label for="login">Login</label> 
+				<input type="text" class="form-control" id="login" name="login" required
+					   title="Este campo é obrigatório">
+    		</div>
+    		
+    		<div class="form-group col-6">
+				<label for="senha">senha</label> 
+				<input type="password" class="form-control" id="senha" name="senha" required
+					   title="Este campo é obrigatório">
+    		</div>
+    	</div>
 
 
 		<div class="form-row"> 
-			<div class="form-group col-sm">
-			 	<label for="localizacao">Localização</label> 
-			 	<select class="form-control"id="localizacao" name="localizacao" required
-						title="Este campo é obrigatório">
-					<option value="">Selecione...</option>
-					<option value="Bloco A">Bloco A</option>
-					<option value="Bloco B">Bloco B</option>
+			<div class="form-group col-12">
+				<label for="disciplina">Disciplina</label> 
+				<select name="disciplina" id="inputState" class="form-control" required>
+					<option selected value=""></option>
+					<div th:each="disciplina : ${disciplinas}">
+						<option th:value="${disciplina.nome}" th:text="${disciplina.nome}"></option>
+					</div>
 				</select>
+			</div>
+		</div>
+		
+		<div class="form-row"> 
+			<div class="form-check pl-4">
+  				<input class="form-check-input" type="checkbox" value="true" name="admin" id="flexCheckDefault">
+  					<label class="form-check-label" for="admin">Administrador</label>
 			</div>
 		</div>
 
@@ -88,9 +107,5 @@
 				<button type="submit" class="btn btn-primary">Salvar</button>
 			</div>
 		</div>
-
-	</form>
-</div>
-	
 </body>
 </html>
