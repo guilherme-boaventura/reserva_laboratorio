@@ -23,6 +23,7 @@ public class LoginController {
 		Professor cadastrado = professorService.getByLoginSenha(professor.getLogin(), professor.getSenha());
 		if(cadastrado != null) {
 			session.setAttribute("user", cadastrado);
+			System.out.println(cadastrado);
 		}else {
 			session.setAttribute("authError", "Credenciais inválidas");
 		}
