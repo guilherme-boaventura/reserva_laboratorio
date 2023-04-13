@@ -1,6 +1,7 @@
 package br.ucsal.reserva.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,10 @@ public class LaboratorioService {
 		return repo.findAll();
 	}
 
-	public Laboratorio cadastrar(String descricao, int numMaquinas, String localizacao) {
+	public Object cadastrar(String descricao, int numMaquinas, String localizacao) {
+		if(!Objects.isNull(getByDescricao(descricao))) {
+			return "Já existe laboratório com essa descrição";
+		}
 		Laboratorio laboratorio = new Laboratorio(descricao, numMaquinas, localizacao);
 		return repo.save(laboratorio);
 	}

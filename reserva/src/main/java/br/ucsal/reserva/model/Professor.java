@@ -1,46 +1,55 @@
 package br.ucsal.reserva.model;
 
+
+import java.util.List;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="PROFESSORES")
+@Table(name = "PROFESSORES")
+//@NamedQueries(
+//		@NamedQuery(name="getDisciplinasById", query = "SELECT DISTINCT disciplinas FROM Professor p INNER JOIN professor_disciplinas ON professor_disciplinas.professor_id = :id"))
 public class Professor {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String nome;
-	
-	@Column(nullable=false)
-	private String disciplina;
-	
-	@Column(nullable=false)
+
+	@ElementCollection
+	private List<String> disciplinas;
+
+	@Column(nullable = false)
 	private String login;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String senha;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String email;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private Boolean admin;
-	
+
 	public Professor() {
-		
+
 	}
-	
-	public Professor(String nome, String disciplina, String login, String senha, String email, Boolean admin) {
+
+	public Professor(String nome, List<String> disciplinas, String login, String senha, String email,
+			Boolean admin) {
 		super();
 		this.nome = nome;
-		this.disciplina = disciplina;
+		this.disciplinas = disciplinas;
 		this.login = login;
 		this.senha = senha;
 		this.email = email;
@@ -54,15 +63,15 @@ public class Professor {
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public String getPrimeiroNome() {
 		String[] nomeDividido = nome.split(" ");
 		return nomeDividido[0];
@@ -72,12 +81,12 @@ public class Professor {
 		this.nome = nome;
 	}
 
-	public String getDisciplina() {
-		return disciplina;
+	public List<String> getDisciplinas() {
+		return disciplinas;
 	}
 
-	public void setDisciplina(String disciplina) {
-		this.disciplina = disciplina;
+	public void setDisciplinas(List<String> disciplinas) {
+		this.disciplinas = disciplinas;
 	}
 
 	public String getLogin() {
@@ -103,5 +112,5 @@ public class Professor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 }

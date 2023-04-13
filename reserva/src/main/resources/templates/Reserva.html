@@ -36,12 +36,12 @@
           <li class="nav-item mr-4">
             <a class="nav-link" href="reserva"><b>Reservar</b></a>
           </li>
-          <li class="nav-item mr-4">
-            <a class="nav-link" href="laboratorios" th:if="${user} != null" th:text="${user.admin} ? 'Cadastrar laboratório' : ''"></a>
-          </li>
-          <li class="nav-item mr-4">
-            <a class="nav-link" href="cadastroProfessor" th:if="${user} != null" th:text="${user.admin} ? 'Cadastrar professor' : ''"></a>
-          </li>
+          <li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="laboratorios" th:if="${user.admin}">Cadastrar laboratório</a>
+          	</li>
+          	<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="cadastroProfessor" th:if="${user.admin}">Cadastrar professor</a>
+          	</li>
           <li class="nav-item username">
             <h5 th:if="${user} != null" th:text="${user.getPrimeiroNome()} ?: ''"></h5>
           </li>
@@ -60,17 +60,17 @@
 					<label for="disciplina">Disciplina</label> 
 					<select
 						name="disciplina" id="inputState" class="form-control" required>
-						<option selected value=""></option>
+						<option selected value="" disabled>Selecione...</option>
 						<div th:each="disciplina : ${disciplinas}">
-							<option th:value="${disciplina.nome}"
-								th:text="${disciplina.nome}"></option>
+							<option th:value="${disciplina}"
+								th:text="${disciplina}"></option>
 					</select>
 				</div>
 
 				<div class="form-group col-md-6">
 					<label>Laboratório</label> <select required name="laboratorio"
 						class="form-control">
-						<option selected value=""></option>
+						<option selected value="" disabled>Selecione...</option>
 						<div th:each="laboratorio : ${laboratorios}">
 							<option th:text="${laboratorio.descricao}"></option>
 						</div>
@@ -84,7 +84,7 @@
 
 				<div class="form-group col-md-5">
 					<label>Horário</label> <select required name="horario" class="form-control">
-						<option selected value=""></option>
+						<option selected value="" disabled>Selecione...</option>
 						<option value="07:00">07:00</option>
 						<option value="08:25">08:25</option>
 						<option value="09:50">09:50</option>
