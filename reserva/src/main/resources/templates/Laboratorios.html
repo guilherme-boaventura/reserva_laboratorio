@@ -26,10 +26,12 @@
 			<ul class="navbar-nav navbar">
 				<li class="nav-item mr-4"><a class="nav-link" href="reserva">Reservar</a>
 				</li>
-				<li class="nav-item mr-4"><a class="nav-link"
-					href="laboratorios"><b>Cadastrar laboratório</b></a></li>
-				<li class="nav-item mr-4"><a class="nav-link"
-					href="cadastroProfessor">Cadastrar professor</a></li>
+				<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="laboratorios" th:if="${user.admin}">Cadastrar laboratório</a>
+          	</li>
+          	<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="cadastroProfessor" th:if="${user.admin}">Cadastrar professor</a>
+          	</li>
 				<li class="nav-item username">
 					<h5 th:if="${user} != null"
 						th:text="${user.getPrimeiroNome()} ?: ''"></h5>
@@ -54,7 +56,7 @@
 				<div class="form-group col-2-md-4">
 					<label for="numMaquinas">Número de Máquinas</label> <input
 						type="number" class="form-control" id="numMaquinas"
-						name="numMaquinas" required title="Este campo é obrigatório">
+						name="numMaquinas" required title="Este campo é obrigatório" min="0">
 				</div>
 			</div>
 
@@ -64,11 +66,15 @@
 					<label for="localizacao">Localização</label> <select
 						class="form-control" id="localizacao" name="localizacao" required
 						title="Este campo é obrigatório">
-						<option value="">Selecione...</option>
+						<option value="" disabled>Selecione...</option>
 						<option value="Bloco A">Bloco A</option>
 						<option value="Bloco B">Bloco B</option>
 					</select>
 				</div>
+			</div>
+			
+			<div class="row d-flex justify-content-center" style="color:red">
+				<small th:text="${error}"></small>
 			</div>
 
 			<div class="form-row button-container">

@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.ucsal.reserva.model.Laboratorio;
 import br.ucsal.reserva.service.LaboratorioService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/laboratorios")
@@ -20,9 +22,18 @@ public class LaboratorioController {
 	}
 
 	@PostMapping()
-	public String createLab(@RequestParam("descricao") String descricao, @RequestParam("numMaquinas") int numMaquinas,
-			@RequestParam("localizacao") String localizacao) {
-		laboratorioService.cadastrar(descricao, numMaquinas, localizacao);
+	public String createLab(@RequestParam("descricao") String descricao, 
+			@RequestParam("numMaquinas") int numMaquinas,
+			@RequestParam("localizacao") String localizacao,
+			HttpSession session) {
+		Object retorno = laboratorioService.cadastrar(descricao, numMaquinas, localizacao);
+		
+		if(!(retorno instanceof Laboratorio)) {
+			session.setAttribute("error", retorno);
+			return "redirect:/laboratorios";
+		}
+		
+		session.removeAttribute("error");
 		return "redirect:/laboratorios";
 
 	}

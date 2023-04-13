@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.ucsal.reserva.model.Professor;
 import br.ucsal.reserva.service.ProfessorService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ProfessorController {
@@ -17,10 +19,21 @@ public class ProfessorController {
 
 	@PostMapping("/cadastrarProfessor")
 	public String cadastrarProfessor(@RequestParam(name = "nome") String nome,
-			@RequestParam(name = "email") String email, @RequestParam(name = "login") String login,
-			@RequestParam(name = "senha") String senha, @RequestParam(name = "disciplina") List<String> disciplinas,
-			@RequestParam(name = "admin", required = false) boolean admin) {
-		service.cadastrar(nome, email, login, senha, disciplinas, (admin == true) ? admin : false);
+			@RequestParam(name = "email") String email, 
+			@RequestParam(name = "login") String login,
+			@RequestParam(name = "senha") String senha, 
+			@RequestParam(name = "disciplina") List<String> disciplinas,
+			@RequestParam(name = "admin", required = false) boolean admin,
+			HttpSession session) {
+		
+		Object retorno = service.cadastrar(nome, email, login, senha, disciplinas, (admin == true) ? admin : false);
+		
+		if(!(retorno instanceof Professor)) {
+			session.setAttribute("error", retorno);
+			return "redirect:/cadastroProfessor";
+		}
+		
+		session.removeAttribute("error");
 		return "redirect:/cadastroProfessor";
 	}
 

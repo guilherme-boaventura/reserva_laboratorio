@@ -26,10 +26,12 @@
 			<ul class="navbar-nav navbar">
 				<li class="nav-item mr-4"><a class="nav-link" href="reserva">Reservar</a>
 				</li>
-				<li class="nav-item mr-4"><a class="nav-link"
-					href="laboratorios">Cadastrar laboratório</a></li>
-				<li class="nav-item mr-4"><a class="nav-link"
-					href="cadastroProfessor"><b>Cadastrar professor</b></a></li>
+				<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="laboratorios" th:if="${user.admin}">Cadastrar laboratório</a>
+          	</li>
+          	<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="cadastroProfessor" th:if="${user.admin}">Cadastrar professor</a>
+          	</li>
 				<li class="nav-item username">
 					<h5 th:if="${user} != null"
 						th:text="${user.getPrimeiroNome()} ?: ''"></h5>
@@ -70,34 +72,15 @@
 				</div>
 			</div>
 
-			<!--  	<div class="form-row">
-				<div class="form-group col-12">
-					<label for="disciplina">Disciplinas</label> <select
-						name="disciplinas" id="inputState" class="form-control" multiple
-						required>
-						<option disabled>Selecione uma ou mais disciplinas:</option>
-						<option value="Lógica de Programação">Lógica de
-							Programação</option>
-						<option value="Arquitetura de Software">Arquitetura de
-							Software</option>
-						<option value="Programação Orientada a Objetos">Programação
-							Orientada a Objetos</option>
-						<option value="Raciocínio Lógico">Raciocínio Lógico</option>
-						<option value="Cálculo 1">Cálculo 1</option>
-					</select>
-				</div>
-			</div>  -->
-
-
 			<div class="form-row">
 				<div class="form-group col-12">
-					<label for="disciplina">Disciplina</label> <select
-						name="disciplina" id="inputState" class="form-control" required>
-						<option selected value=""></option>
+					<label for="disciplina">Disciplinas <small>(segure CTRL para escolher várias disciplinas)</small></label> 
+					<select
+						name="disciplina" id="inputState" class="form-control" required multiple>
+						<option selected value="" disabled>Selecione...</option>
 						<div th:each="disciplina : ${disciplinas}">
 							<option th:value="${disciplina.nome}"
 								th:text="${disciplina.nome}"></option>
-						</div>
 					</select>
 				</div>
 			</div>
@@ -108,6 +91,10 @@
 						name="admin" id="flexCheckDefault"> <label
 						class="form-check-label" for="admin">Administrador</label>
 				</div>
+			</div>
+			
+			<div class="row d-flex justify-content-center" style="color:red">
+				<small th:text="${error}"></small>
 			</div>
 
 			<div class="form-row button-container">

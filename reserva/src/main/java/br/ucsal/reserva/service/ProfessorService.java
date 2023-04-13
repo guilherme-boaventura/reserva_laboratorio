@@ -1,6 +1,7 @@
 package br.ucsal.reserva.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,48 @@ public class ProfessorService {
 			return null;
 		}
 	}
+	
+	public Professor getByLogin(String login) {
+		Query sql = em.createQuery("FROM Professor p WHERE p.login='" + login + "'");
+		Stream<Professor> result = sql.getResultStream();
+		try {
+			return result.findFirst().get();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public List<String> getDisciplinasByProfessor(Long id) {
+		Query sql = em.createQuery("FROM Professor p WHERE p.id = " + id);
+		Stream<Professor> result = sql.getResultStream();
+		
+		try {
+			return result.findFirst().get().getDisciplinas();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public Professor getByEmail(String email) {
+		Query sql = em.createQuery("FROM Professor p WHERE p.email='" + email + "'");
+		Stream<Professor> result = sql.getResultStream();
+		try {
+			return result.findFirst().get();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
-	public Professor cadastrar(String nome, String email, String login, String senha, List<String> disciplinas,
+	public Object cadastrar(String nome, String email, String login, String senha, List<String> disciplinas,
 			Boolean admin) {
+		
+		if(!Objects.isNull(getByLogin(login))) {
+			return "já existe usuário com esse login";
+		}
+		if(!Objects.isNull(getByEmail(email))) {
+			return "já existe usuário com esse email";
+		}
+		
 		Professor professor = new Professor(nome, disciplinas, login, senha, email, admin);
 		return repo.save(professor);
 	}

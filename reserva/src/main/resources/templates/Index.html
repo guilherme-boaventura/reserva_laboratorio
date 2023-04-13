@@ -35,12 +35,12 @@
           <li class="nav-item mr-4">
             <a class="nav-link" href="reserva">Reservar</a>
           </li>
-          <li class="nav-item mr-4">
-            <a class="nav-link" href="laboratorios" th:if="${user} != null" th:text="${user.admin} ? 'Cadastrar laboratório' : ''"></a>
-          </li>
-          <li class="nav-item mr-4">
-            <a class="nav-link" href="cadastroProfessor" th:if="${user} != null" th:text="${user.admin} ? 'Cadastrar professor' : ''"></a>
-          </li>
+          	<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="laboratorios" th:if="${user.admin}">Cadastrar laboratório</a>
+          	</li>
+          	<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="cadastroProfessor" th:if="${user.admin}">Cadastrar professor</a>
+          	</li>
           <li class="nav-item username">
             <h5 th:if="${user} != null" th:text="${user.getPrimeiroNome()} ?: ''"></h5>
           </li>

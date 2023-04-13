@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ucsal.reserva.model.Disciplina;
+import br.ucsal.reserva.model.Professor;
 import br.ucsal.reserva.service.LaboratorioService;
+import br.ucsal.reserva.service.ProfessorService;
 import br.ucsal.reserva.service.ReservaService;
 import jakarta.servlet.http.HttpSession;
 
@@ -20,6 +22,9 @@ public class PathController {
 
 	@Autowired
 	private LaboratorioService laboratorioService;
+	
+	@Autowired
+	private ProfessorService professorService;
 
 	@GetMapping("/")
 	public String home() {
@@ -37,6 +42,7 @@ public class PathController {
 
 	@GetMapping("/reserva")
 	public Object reserva(HttpSession session) {
+		Professor professor = (Professor) session.getAttribute("user");
 		if (Objects.isNull(session.getAttribute("user"))) {
 			ModelAndView mv = new ModelAndView("Index");
 			session.setAttribute("authError", "Entre para reservar um laboratório");
@@ -44,7 +50,7 @@ public class PathController {
 		} else {
 			ModelAndView mv = new ModelAndView("Reserva");
 			mv.addObject("user", session.getAttribute("user"));
-			mv.addObject("disciplinas", Disciplina.getAll());
+			mv.addObject("disciplinas", professorService.getDisciplinasByProfessor(professor.getId()));
 			mv.addObject("laboratorios", laboratorioService.getAll());
 			return mv;
 		}
@@ -54,6 +60,7 @@ public class PathController {
 	public Object cadastrarLaboratorio(HttpSession session) {
 		ModelAndView mv = new ModelAndView("Laboratorios");
 		mv.addObject("user", session.getAttribute("user"));
+		mv.addObject("error", session.getAttribute("error"));
 		return mv;
 	}
 
@@ -61,6 +68,7 @@ public class PathController {
 	public ModelAndView cadastrarProfessor(HttpSession session) {
 		ModelAndView mv = new ModelAndView("CadastroProfessor");
 		mv.addObject("user", session.getAttribute("user"));
+		mv.addObject("error", session.getAttribute("error"));
 		mv.addObject("disciplinas", Disciplina.getAll());
 		return mv;
 	}

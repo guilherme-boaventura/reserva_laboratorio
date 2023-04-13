@@ -4,14 +4,19 @@ package br.ucsal.reserva.model;
 import java.util.List;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "PROFESSORES")
+//@NamedQueries(
+//		@NamedQuery(name="getDisciplinasById", query = "SELECT DISTINCT disciplinas FROM Professor p INNER JOIN professor_disciplinas ON professor_disciplinas.professor_id = :id"))
 public class Professor {
 
 	@Id
@@ -21,7 +26,7 @@ public class Professor {
 	@Column(nullable = false)
 	private String nome;
 
-	@Column(nullable = false)
+	@ElementCollection
 	private List<String> disciplinas;
 
 	@Column(nullable = false)
