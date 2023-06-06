@@ -1,2 +1,2 @@
 # reserva_laboratorio
-# Laboratories reservation system
+Laboratories reservation system
